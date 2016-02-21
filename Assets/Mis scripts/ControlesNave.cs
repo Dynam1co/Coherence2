@@ -4,33 +4,54 @@ using System.Collections;
 
 public class ControlesNave : MonoBehaviour
 {
-
-    public Rigidbody playerModel;
+    public float thrust;
+    public float torque=1;
+    public Rigidbody rb;
     public float moveSpeed, tilt, rotateSpeed;
 
     /*public*/
     float rotateController = 0; //can make public to monitor status of 360 rotation/reset
 
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void FixedUpdate()
     {
-
-
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVeritcal = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVeritcal);
+        /*Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVeritcal);
 
-        playerModel.velocity = (movement * moveSpeed);
-        playerModel.rotation = Quaternion.Euler(playerModel.velocity.z * tilt,
+        rb.velocity = (movement * moveSpeed);
+        rb.rotation = Quaternion.Euler(rb.velocity.z * tilt,
                                                  rotateController,
-                                                 playerModel.velocity.x * -tilt);
+                                                 rb.velocity.x * -tilt);
         rotateController += rotateSpeed * Time.deltaTime;
 
         if (rotateController > 360)
-            rotateController -= 360;
+            rotateController -= 360;*/
 
+        if(Input.GetKey(KeyCode.W))
+        {
+            rb.AddForce(transform.up * thrust);
+        }
 
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddForce(transform.up * (thrust * -1));
+        }
 
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.AddTorque(transform.forward * torque * thrust);
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.AddTorque(transform.forward * (torque * -1) * (thrust * -1));
+        }
     }
 
 
