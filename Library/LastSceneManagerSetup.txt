@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/EscenaTony.unity
+- path: Assets/Escena 1.unity
   isLoaded: 1
   isActive: 1
